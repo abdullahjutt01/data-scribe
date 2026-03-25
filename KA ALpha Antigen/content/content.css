@@ -1,0 +1,14 @@
+/* KA Alpha Antigen — Content Script Styles */
+/* Minimal styles injected into pages */
+
+.ka-highlight {
+  background: rgba(99, 102, 241, 0.2) !important;
+  border: 1px solid rgba(99, 102, 241, 0.5) !important;
+  border-radius: 3px !important;
+  padding: 1px 3px !important;
+  transition: all 0.3s ease !important;
+}
+
+.ka-highlight:hover {
+  background: rgba(99, 102, 241, 0.4) !important;
+}

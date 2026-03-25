@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=320, initial-scale=1.0">
+  <title>KA Alpha Antigen</title>
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="popup-container">
+
+  <div class="bg-grid"></div>
+  <div class="bokeh-1"></div>
+  <div class="bokeh-2"></div>
+  <div class="bokeh-3"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="logo-box">
+        🧬
+        <div class="logo-pulse"></div>
+      </div>
+      <div class="brand-text">
+        <h1>KA ALPHA ANTIGEN</h1>
+        <span class="tagline">NO CONTACT LEFT BEHIND</span>
+      </div>
+    </div>
+    <button id="settingsBtn" class="icon-btn" title="Settings" aria-label="Open Settings">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Search Inputs -->
+  <section class="search-section">
+    <div class="input-group">
+      <div class="input-icon">🏢</div>
+      <input type="text" id="companyInput" placeholder="Enter company name..." aria-label="Company Name" autocomplete="off">
+    </div>
+    <div class="input-group">
+      <div class="input-icon">👤</div>
+      <input type="text" id="directorInput" placeholder="Director name (optional)" aria-label="Director Name" autocomplete="off">
+    </div>
+    <div class="input-group">
+      <div class="input-icon">📍</div>
+      <input type="text" id="locationInput" placeholder="Location (optional)" aria-label="Location" autocomplete="off">
+    </div>
+    <div class="input-group">
+      <div class="input-icon">🌐</div>
+      <input type="text" id="websiteInput" placeholder="Website URL (optional)" aria-label="Website URL" autocomplete="off">
+    </div>
+  </section>
+
+
+
+  <!-- Scanner Row -->
+  <div class="scanner-row">
+    <button id="scanBarcodeBtn" class="scanner-btn">▐▌▐▌ SCAN BARCODE</button>
+    <button id="scanPictureBtn" class="scanner-btn">📷 SCAN PICTURE</button>
+  </div>
+
+  <!-- Hunt Button -->
+  <div class="hunt-btn-wrap">
+    <button id="huntBtn">
+      <span class="hunt-btn-text">🔍 HUNT ALL CONTACTS</span>
+      <span class="hunt-btn-loading" style="display:none;"><div class="spinner"></div> SCANNING...</span>
+      <div class="hunt-shine"></div>
+    </button>
+  </div>
+
+  <!-- Data Sources (Moved below Hunt button) -->
+  <div class="data-sources-card">
+    <div class="card-label">Data Sources (Bulk Search)</div>
+    <div class="input-group">
+      <div class="input-icon">📄</div>
+      <input type="text" id="sheetUrlInput" placeholder="Google Sheet URL (Public CSV Link)" aria-label="Google Sheet URL" autocomplete="off">
+    </div>
+    <button id="loadSheetBtn" class="load-btn">⬇️ LOAD COMPANIES FROM SHEET</button>
+  </div>
+
+  <!-- Layer Status — always visible -->
+  <section id="layerStatus" class="layer-status-card">
+    <div class="layer-header">
+      <span class="layer-title">Layer Status</span>
+      <span class="layer-subtitle">Status Dashboard</span>
+    </div>
+    <div class="layer-item pending" id="layer1">
+      <div class="layer-left">
+        <div class="layer-dot"></div>
+        <span class="layer-label">Layer 1: Social Media</span>
+      </div>
+      <span class="layer-badge">Pending</span>
+    </div>
+    <div class="layer-item pending" id="layer2">
+      <div class="layer-left">
+        <div class="layer-dot"></div>
+        <span class="layer-label">Layer 2: Website</span>
+      </div>
+      <span class="layer-badge">Pending</span>
+    </div>
+    <div class="layer-item pending" id="layer3">
+      <div class="layer-left">
+        <div class="layer-dot"></div>
+        <span class="layer-label">Layer 3: APIs</span>
+      </div>
+      <span class="layer-badge">Pending</span>
+    </div>
+  </section>
+
+  <!-- Quick Results -->
+  <section id="quickResults" class="quick-results" style="display:none;">
+    <div class="result-stats">
+      <div class="stat-card"><div class="stat-icon">📧</div><div class="stat-num" id="emailCount">0</div><div class="stat-label">Emails</div></div>
+      <div class="stat-card"><div class="stat-icon">📱</div><div class="stat-num" id="phoneCount">0</div><div class="stat-label">Phones</div></div>
+      <div class="stat-card"><div class="stat-icon">🔗</div><div class="stat-num" id="socialCount">0</div><div class="stat-label">Socials</div></div>
+      <div class="stat-card"><div class="stat-icon">👤</div><div class="stat-num" id="peopleCount">0</div><div class="stat-label">People</div></div>
+    </div>
+    <div class="action-buttons">
+      <button id="openDashboardBtn" class="action-btn dashboard-btn">📊 Full Dashboard</button>
+      <button id="exportBtn" class="action-btn">📋 Copy CRM Row</button>
+      <button id="tabBlastBtn" class="action-btn blast-btn">🚀 Launch All</button>
+      <button id="exportAllBtn" class="action-btn">🗂️ Export All</button>
+    </div>
+  </section>
+
+  <!-- Recent Scans -->
+  <section class="recent-section">
+    <div class="section-header"><h3>Recent Scans</h3></div>
+    <div id="recentScans" class="recent-list">
+      <div class="empty-state">No hunting history yet.</div>
+    </div>
+  </section>
+
+  <!-- Bulk Mode -->
+  <section class="bulk-section">
+    <div class="bulk-header">
+      <span class="bulk-title">Bulk Mode</span>
+      <span class="bulk-subtitle">Files Uploaded: 0</span>
+    </div>
+    <textarea id="bulkInput" placeholder="Enter your text here..." aria-label="Bulk Hunt List"></textarea>
+    <button id="bulkHuntBtn" class="bulk-btn">
+      🚀 START BULK HUNT
+      <span class="bulk-estimate">Estimate: 12 mins</span>
+      <span class="bulk-diamond">✦</span>
+    </button>
+  </section>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>⚙️ API Settings</h2>
+        <button id="closeSettings" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note">Power Controls &amp; Premium Data Keys</p>
+        <div class="api-input-group highlight-row">
+          <label for="enableLayer2">🚀 Master Engine (Layer 2 Crawler)</label>
+          <label class="toggle-switch"><input type="checkbox" id="enableLayer2" checked><span class="toggle-slider"></span></label>
+        </div>
+        <div class="api-input-group">
+          <div class="api-label-row"><label for="apolloKey">Apollo.io API Key</label><label class="toggle-switch"><input type="checkbox" id="enableApollo" checked><span class="toggle-slider"></span></label></div>
+          <input type="password" id="apolloKey" placeholder="Your Apollo API key...">
+        </div>
+        <div class="api-input-group">
+          <div class="api-label-row"><label for="hunterKey">Hunter.io API Key</label><label class="toggle-switch"><input type="checkbox" id="enableHunter" checked><span class="toggle-slider"></span></label></div>
+          <input type="password" id="hunterKey" placeholder="Your Hunter API key...">
+        </div>
+        <div class="api-input-group">
+          <div class="api-label-row"><label for="rocketreachKey">RocketReach API Key</label><label class="toggle-switch"><input type="checkbox" id="enableRocketReach" checked><span class="toggle-slider"></span></label></div>
+          <input type="password" id="rocketreachKey" placeholder="Your RocketReach API key...">
+        </div>
+        <div class="api-input-group">
+          <div class="api-label-row"><label for="googleKey">Google CSE (Search Engine)</label><label class="toggle-switch"><input type="checkbox" id="enableGoogleSearch" checked><span class="toggle-slider"></span></label></div>
+          <input type="password" id="googleKey" placeholder="Your Google Custom Search key...">
+        </div>
+        <div class="api-input-group">
+          <label for="googleCx">Google CSE CX ID</label>
+          <input type="text" id="googleCx" placeholder="Your Custom Search Engine ID...">
+        </div>
+        <div class="api-input-group">
+          <label for="imgbbKey">imgbb API Key (optional)</label>
+          <input type="text" id="imgbbKey" placeholder="Your imgbb API key...">
+        </div>
+        <div class="api-input-group">
+          <div class="api-label-row"><label for="scriptUrl">Google Sheets Web App URL</label><label class="toggle-switch"><input type="checkbox" id="enableAutoSheets" checked><span class="toggle-slider"></span></label></div>
+          <div style="display:flex;gap:8px;">
+            <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/..." style="flex:1;">
+            <button id="testScriptBtn" class="icon-btn" title="Test Connection" style="width:40px;height:38px;font-size:16px;">🧬</button>
+          </div>
+          <p class="modal-note" style="margin-top:5px; color: #fbbf24;"><strong>⚠️ IMPORTANT:</strong> Do NOT paste the Google Sheet URL here. Paste the "Web App URL" from the Apps Script Deployment.</p>
+          <p class="modal-note" style="margin-top:2px;"><strong>Setup:</strong> Paste script → Deploy → New Deployment → Type: Web App → Access: Anyone → <strong>Copy URL</strong>.</p>
+        </div>
+        <button id="saveKeysBtn" class="modal-save-btn">💾 Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scanner Modal -->
+  <div id="scannerModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="scannerTitle">📷 Visual Search</h2>
+        <button id="closeScanner" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-note" id="scannerNote">Scan a barcode or upload a product picture.</p>
+        <div class="scanner-preview-box">
+          <video id="scannerVideo" autoplay playsinline style="display:none;width:100%;border-radius:7px;"></video>
+          <img id="scannerImg" style="display:none;width:100%;border-radius:7px;" alt="Scanned image">
+          <div id="scannerPlaceholder">No image selected</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button id="openCameraBtn" class="load-btn" style="flex:1;">🎥 Camera</button>
+          <label for="scannerUpload" class="load-btn" style="flex:1;cursor:pointer;">📁 Upload<input type="file" id="scannerUpload" accept="image/*" style="display:none;"></label>
+        </div>
+        <div id="scannerResult" style="display:none;font-weight:700;color:#22c55e;font-size:13px;"></div>
+        <button id="processScanBtn" class="load-btn" style="display:none;background:linear-gradient(135deg,#22c55e,#16a34a);">🔍 Search Product</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="popup.js"></script>
+</body>
+</html>

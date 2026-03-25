@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KA Alpha Antigen — Dashboard</title>
+  <link rel="stylesheet" href="sidepanel.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header -->
+    <header class="dash-header">
+      <div class="dash-brand">
+        <span class="dash-logo">🧬</span>
+        <div>
+          <h1>KA Alpha Antigen</h1>
+          <span class="dash-subtitle">Full Contact Intelligence Report</span>
+        </div>
+      </div>
+      <div class="dash-actions">
+        <button id="refreshBtn" class="dash-icon-btn" title="Refresh">🔄</button>
+        <button id="exportCsvBtn" class="dash-icon-btn" title="Export CSV">📥</button>
+        <button id="exportJsonBtn" class="dash-icon-btn" title="Export JSON">📦</button>
+        <button id="exportSheetsBtn" class="dash-icon-btn" style="color:#10b981; border-color:rgba(16,185,129,0.3);" title="Export to Google Sheets">📊</button>
+      </div>
+    </header>
+
+    <!-- Company Banner -->
+    <section id="companyBanner" class="company-banner">
+      <div class="banner-top">
+        <div class="company-avatar" id="companyAvatar">🏢</div>
+        <div class="company-info">
+          <h2 id="companyNameDisplay">No Company Scanned</h2>
+          <a id="companyWebsite" class="company-url" href="#" target="_blank">—</a>
+        </div>
+      </div>
+      <div class="banner-meta" id="bannerMeta"></div>
+    </section>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="overview">📊 Overview</button>
+      <button class="tab-btn" data-tab="people">👥 People</button>
+      <button class="tab-btn" data-tab="contact">📞 Contact</button>
+      <button class="tab-btn" data-tab="social">🌐 Social</button>
+      <button class="tab-btn" data-tab="activity">⚡ Activity</button>
+    </nav>
+
+    <!-- Tab Panels -->
+    <div class="tab-panels">
+
+      <!-- Overview Tab -->
+      <div class="tab-panel active" id="tab-overview">
+        <div class="overview-grid">
+          <div class="overview-card card-emails">
+            <div class="ov-icon">📧</div>
+            <div class="ov-num" id="ovEmails">0</div>
+            <div class="ov-label">Verified Emails</div>
+          </div>
+          <div class="overview-card card-phones">
+            <div class="ov-icon">📱</div>
+            <div class="ov-num" id="ovPhones">0</div>
+            <div class="ov-label">Phone Numbers</div>
+          </div>
+          <div class="overview-card card-social">
+            <div class="ov-icon">🔗</div>
+            <div class="ov-num" id="ovSocials">0</div>
+            <div class="ov-label">Social Profiles</div>
+          </div>
+          <div class="overview-card card-people">
+            <div class="ov-icon">👥</div>
+            <div class="ov-num" id="ovPeople">0</div>
+            <div class="ov-label">Key People</div>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="data-section">
+          <h3 class="section-title">📑 Complete Data Matrix</h3>
+          <table class="data-table" id="dataMatrix">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Information</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="dataMatrixBody">
+              <tr><td colspan="3" class="empty-cell">Scan a company to see results</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tab Blast Section -->
+        <div class="blast-section">
+          <button id="dashTabBlastBtn" class="tab-blast-btn">
+            <span class="blast-icon">🚀</span>
+            <div class="blast-text">
+              <strong>Launch All Contacts</strong>
+              <small id="blastCount">0 tabs ready</small>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- People Tab -->
+      <div class="tab-panel" id="tab-people">
+        <div id="peopleList" class="people-list">
+          <div class="empty-state-dash">No people found yet. Run a scan first.</div>
+        </div>
+      </div>
+
+      <!-- Contact Tab -->
+      <div class="tab-panel" id="tab-contact">
+        <div class="contact-section">
+          <h3 class="section-title">📧 Email Addresses</h3>
+          <div id="emailList" class="contact-list">
+            <div class="empty-state-dash">No emails found</div>
+          </div>
+        </div>
+        <div class="contact-section">
+          <h3 class="section-title">📱 Phone Numbers</h3>
+          <div id="phoneList" class="contact-list">
+            <div class="empty-state-dash">No phones found</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Tab -->
+      <div class="tab-panel" id="tab-social">
+        <div id="socialGrid" class="social-grid">
+          <div class="empty-state-dash">No social links found</div>
+        </div>
+      </div>
+
+      <!-- Activity Tab -->
+      <div class="tab-panel" id="tab-activity">
+        <div class="activity-section">
+          <h3 class="section-title">🛠️ Tech Stack</h3>
+          <div id="techStack" class="tech-stack">
+            <div class="empty-state-dash">Not detected</div>
+          </div>
+        </div>
+        <div class="activity-section">
+          <h3 class="section-title">📋 Scan Summary</h3>
+          <div id="scanSummary" class="scan-summary">
+            <div class="empty-state-dash">No scan data available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dash-footer">
+      <span>KA Alpha Antigen v1.0 — Built for Hunters 🎯</span>
+    </footer>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>
